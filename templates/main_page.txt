@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drowsiness Detection System</title>
+    <style>
+        body {
+            background-image: url('/static/background2.jpg');
+            background-size: cover;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .container {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .guidelines {
+            margin-top: 50px;
+            text-align: left;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+        .alarm-message {
+            background-color: red;
+            color: white;
+            padding: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .info {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 50px;
+            text-align: left;
+        }
+        .footer {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .warning {
+            color: red;
+            font-size: 1.5em;
+            margin-top: 10px;
+        }
+        .learn-more {
+            background-color: #17a2b8;
+            border-radius: 5px;
+            padding: 10px 20px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            display: inline-block;
+        }
+        .learn-more:hover {
+            background-color: #117a8b;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Welcome, {{ user.name }}!</h1>
+    </div>
+
+    <div class="container">
+        <div class="alarm-message" id="alarm-message">
+            <p><img src="/static/warning.png" alt="Warning" width="30px" height="30px"> {{ user.name }} is feeling drowsy!</p>
+        </div>
+
+        <p>This system helps in detecting drowsiness and alerts the user to prevent accidents.</p>
+        <div class="button-container">
+            <button onclick="startDetection()">Start</button>
+            <button onclick="stopDetection()">Stop</button>
+            <button onclick="viewLog()">View Log</button>
+        </div>
+
+        <div class="guidelines">
+            <h2>How to Use:</h2>
+            <p>1. Click the "Start" button to begin the drowsiness detection system.</p>
+            <p>2. Keep your face in the camera frame. The system will detect your eyes and alert you if you appear drowsy.</p>
+            <p>3. Click the "Stop" button to stop the drowsiness detection system.</p>
+        </div>
+    </div>
+
+    <div class="info">
+        <h2>What is Drowsiness Detection System?</h2>
+        <p>The Drowsiness Detection System is an AI-based application that helps in preventing accidents caused by drowsy driving. It monitors the driver's eye movements and alerts them when they are showing signs of drowsiness.</p>
+        <h2>Why is it important?</h2>
+        <p>Drowsy driving is a major cause of accidents worldwide. By alerting drivers when they are feeling drowsy, this system helps in preventing accidents and saving lives.</p>
+        <h2>How does it work?</h2>
+        <p>The system uses a camera to monitor the driver's face. It detects eye movements and alerts the driver if they show signs of drowsiness.</p>
+        <h2>Who can use it?</h2>
+        <p>The Drowsiness Detection System can be used by anyone who wants to avoid accidents caused by drowsy driving. It is especially useful for truck drivers, long-distance drivers, and anyone who drives for extended periods.</p>
+        <a href="#" class="learn-more">Learn More</a>
+    </div>
+
+    <div class="footer">
+        <p>Developed by Your Name | © 2024 Drowsiness Detection System</p>
+    </div>
+
+    <script>
+        function startDetection() {
+            fetch('/start')
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.status);
+                    document.getElementById('alarm-message').style.display = 'none';
+                });
+        }
+
+        function stopDetection() {
+            fetch('/stop')
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.status);
+                    document.getElementById('alarm-message').style.display = 'none';
+                });
+        }
+
+        function viewLog() {
+            window.location.href = '/log';
+        }
+
+        function checkAlarm() {
+            fetch('/alarm_triggered')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.alarm_triggered) {
+                        document.getElementById('alarm-message').style.display = 'block';
+                    }
+                });
+        }
+
+        setInterval(checkAlarm, 1000);
+    </script>
+</body>
+</html>

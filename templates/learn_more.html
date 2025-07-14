@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn More</title>
+    <style>
+        body {
+            background-image: url('/static/background.jpg');
+            background-size: cover;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            margin-top: 100px;
+        }
+        h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .info-container {
+            width: 70%;
+            margin: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+        }
+        .info-container h2 {
+            border-bottom: 2px solid #fff;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .info-container ol {
+            padding-left: 20px;
+        }
+        .info-container li {
+            margin-bottom: 10px;
+        }
+        .info-container p {
+            line-height: 1.6;
+        }
+        .learn-more-button {
+            background-color: #007BFF;
+            color: white;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s;
+        }
+        .learn-more-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Learn More</h1>
+        <div class="info-container">
+            <h2>How Drowsiness Detection System Works</h2>
+            <p>The Drowsiness Detection System is an innovative solution designed to prevent accidents caused by driver fatigue. It monitors the driver's facial landmarks in real-time, tracking eye closure and head movements to determine the driver's alertness level. When drowsiness is detected, the system triggers an alarm to alert the driver, preventing potential accidents.</p>
+            <p>The system operates in the following steps:</p>
+            <ol>
+                <li><strong>Facial landmark detection:</strong> The system detects and tracks the driver's facial features, including eyes and head. It uses computer vision techniques to identify key facial landmarks.</li>
+                <li><strong>Eye closure monitoring:</strong> Continuous monitoring of the driver's eyes to detect any signs of drowsiness or fatigue. By analyzing changes in eye behavior, the system can determine if the driver is becoming drowsy.</li>
+                <li><strong>Head movement tracking:</strong> Tracking the driver's head movements to assess their alertness level. Sudden or erratic head movements can indicate drowsiness or loss of focus.</li>
+                <li><strong>Drowsiness detection and alarm triggering:</strong> If the system detects drowsiness based on eye closure and head movements, it triggers an alarm to alert the driver. The alarm can be a sound, vibration, or visual alert to ensure the driver is alerted.</li>
+            </ol>
+            <p>The Drowsiness Detection System is crucial for ensuring road safety and preventing accidents caused by driver fatigue. It can be integrated into vehicles to provide real-time monitoring and alerts, helping to save lives and reduce the risk of accidents.</p>
+        </div>
+        <button class="learn-more-button" onclick="location.href='/main'">Back to Main Page</button>
+    </div>
+</body>
+</html>

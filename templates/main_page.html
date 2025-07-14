@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drowsiness Detection System</title>
+    <style>
+        body {
+            background-image: url('/static/background2.jpg');
+            background-size: cover;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .sub-heading {
+            font-size: 2em;
+            text-align: center;
+            color: #007BFF;
+            margin-bottom: 40px;
+        }
+        .form-container {
+            width: 80%;
+            max-width: 500px;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .form-container p {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        input[type="submit"], input[type="button"] {
+            width: 100%;
+            background-color: #007BFF;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.5s;
+        }
+        input[type="submit"]:hover, input[type="button"]:hover {
+            background-color: #0056b3;
+        }
+        input[type="submit"]:disabled, input[type="button"]:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .back-button {
+            margin-top: 20px;
+            
+        }
+        .learn-more-container {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: left;
+            border: 2px solid black;
+        }
+        .learn-more-text {
+            color: #ffffff;
+            font-size: 1.2em;
+        }
+        .learn-more-button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border: 2px solid black;
+        }
+        .learn-more-button:hover {
+            background-color: #0056b3;
+        }
+        .warning {
+    font-size: 1.5em;
+    margin-top: 20px;
+    display: none;
+    padding: 20px;
+    background-color: #ff0000;
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(255, 2, 2, 0.5);
+    border: 2px solid black;
+}
+        .warning-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+        .made-by {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="warning" id="warningBox">
+        <img class="warning-icon" src="/static/warning.png" alt="Warning">
+        <div>Warning: Drowsiness Detected!</div>
+    </div>
+    <div class="container">
+        <h1>DRIVEGUARD</h1>
+        <div class="sub-heading">Preventing Accidents Through Drowsiness Detection</div>
+        <div class="form-container">
+            <p>Hello, {{ user.name }}!</p>
+            <p>Your age: {{ user.age }}</p>
+            <p>Your gender: {{ user.gender }}</p>
+            <form id="detectionForm">
+                <input type="submit" id="startButton" value="Start Detection">
+                <input type="button" id="stopButton" value="Stop Detection" disabled>
+                <input type="button" onclick="window.location.href='/log'" value="Log Record">
+            </form>
+            <input type="button" class="back-button" onclick="window.location.href='/'" value="Back">
+        </div>
+
+        <div class="learn-more-container">
+            <div class="learn-more-text">
+                <h2>How DRIVEGUARD Works</h2>
+                <p>This system monitors the driver's facial landmarks in real-time to detect drowsiness. It tracks eye closure and head movements to determine the driver's alertness level. When drowsiness is detected, an alarm is triggered to alert the driver.</p>
+                <p>Drowsiness detection is important to prevent accidents caused by driver fatigue.</p>
+                <p>The system uses the following steps:</p>
+                <ol>
+                    <li>Facial landmark detection.</li>
+                    <li>Eye closure monitoring.</li>
+                    <li>Head movement tracking.</li>
+                    <li>Drowsiness detection and alarm triggering.</li>
+                </ol>
+            </div>
+            <button class="learn-more-button" onclick="location.href='/learn_more'">Learn More</button>
+        </div>
+        <div class="warning" id="warningBox"></div>
+    </div>
+    <div class="made-by">Made by Ambuj Shrivastav</div>
+
+    <script>
+        document.getElementById('detectionForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            fetch('/start')
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'Drowsiness detection started') {
+                    document.getElementById('startButton').disabled = true;
+                    document.getElementById('stopButton').disabled = false;
+                }
+                else if (data.status === 'Underage person detected') {
+                    alert(data.message);
+                }
+            });
+        });
+
+        document.getElementById('stopButton').addEventListener('click', function() {
+            fetch('/stop')
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'Drowsiness detection stopped') {
+                    document.getElementById('startButton').disabled = false;
+                    document.getElementById('stopButton').disabled = true;
+                }
+            });
+        });
+
+       function checkForWarning() {
+        fetch('/alarm_triggered')
+        .then(response => response.json())
+        .then(data => {
+            if (data.alarm_triggered) {
+                fetch('/log_details')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.name) {
+                        const warningBox = document.getElementById('warningBox');
+                        warningBox.innerHTML = `<img class="warning-icon" src="/static/warning.png" alt="Warning"><div>${data.name}, you are feeling drowsy</div>`;
+                        warningBox.style.display = 'block';
+                        setTimeout(() => {
+                            warningBox.style.display = 'none';
+                        }, 10000); // Hide warning after 10 seconds
+                    }
+                });
+            }
+        });
+    }
+
+    // Check for warning periodically
+    setInterval(checkForWarning, 5000);
+    // Check for warning on page load
+    checkForWarning();
+</script>
+</body>
+</html>
+

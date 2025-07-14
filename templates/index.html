@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drowsiness Detection System</title>
+    <style>
+        body {
+            background-image: url('/static/background.jpg');
+            background-size: cover;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            margin-top: 100px;
+        }
+        h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        .form-container {
+            width: 50%;
+            margin: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid black;
+        }
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            border: 2px solid black;
+        }
+        input[type="submit"] {
+            width: 100%;
+            background-color: #007BFF;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 2px solid black;
+            transition: background-color 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+            
+        }
+        .guidelines {
+            text-align: left;
+            margin-top: 30px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 2px solid black;
+            
+        }
+        .made-by {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Drowsiness Detection System</h1>
+        <div class="form-container">
+            <form id="userForm">
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name" required><br>
+                <label for="age">Age:</label><br>
+                <input type="number" id="age" name="age" min="1" max="100" required><br>
+                <label for="gender">Gender:</label><br>
+                <select id="gender" name="gender" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select><br><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+
+        <div class="guidelines">
+            <h2>Guidelines:</h2>
+            <ul>
+                <li>Fill in your details and submit to start the drowsiness detection system.</li>
+                <li>Once started, the system will continuously monitor your alertness level.</li>
+                <li>If drowsiness is detected, an alarm will be triggered.</li>
+                <li>Click on "Learn More" to know how the system works.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="made-by">Made by Ambuj Shrivastav</div>
+
+    <script>
+        document.getElementById('userForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const gender = document.getElementById('gender').value;
+
+            const user = { name, age, gender };
+
+            fetch('/set_user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(user)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'User details saved successfully') {
+                    window.location.href = '/main';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
