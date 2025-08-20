@@ -5,7 +5,7 @@ This project detects drowsiness in real-time using a webcam feed by monitoring e
 
 ---
 
-## 📌 Features
+## Features
 
 Real-time detection of drowsiness using a webcam
 
@@ -21,7 +21,7 @@ Clean UI using OpenCV for frame annotations
 
 ---
 
-## 🧠 Technologies Used
+## Technologies Used
 
 Python 3
 
@@ -37,7 +37,7 @@ Python 3
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
 
      drowsiness_detection/
      ├── drowsiness_detection.py       # Main script
@@ -49,7 +49,7 @@ Python 3
 
 ---
 
-## ⚙️ How to Run
+## How to Run
 
 ### 1. Clone the repository:
 
@@ -80,7 +80,7 @@ Python 3
 
 ---
 
-## 🧪 How It Works
+## How It Works
 
 Facial landmarks are detected using dlib’s 68-point predictor.
 
@@ -94,7 +94,7 @@ If eyes are detected closed for consecutive frames (can edit the time), an alarm
 
 ---
 
-## ✅ Ideal Use Cases
+## Ideal Use Cases
 
 Driver drowsiness detection systems
 
